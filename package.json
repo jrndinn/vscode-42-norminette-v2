@@ -1,10 +1,15 @@
 {
   "name": "42-norminette-v2",
-  "displayName": "42 Norminette v2",
+  "displayName": "42 Norminette v2 (3.x)",
   "description": "The new 42 school norminette, compatible with norme v3.0",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "publisher": "hroussea",
   "engines": {
-    "vscode": "^1.45.0"
+    "vscode": "^1.53.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jorundev/vscode-42-norminette-v2"
   },
   "categories": [
     "Other"
@@ -14,6 +19,16 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Norminette v2",
+      "properties": {
+        "norminettev2.norminette_bin" : {
+          "type": "string",
+          "default": "norminettev2",
+          "description": "command to invoke the norminette (3.x)"
+        }
+      }
+    },
     "commands": [
       {
         "command": "42-norminette-v2.launchNorm",
