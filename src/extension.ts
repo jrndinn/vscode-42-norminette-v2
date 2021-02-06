@@ -8,7 +8,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		let params = vscode.workspace.getConfiguration('norminettev2');
 		let bin = params.get("norminette_bin");
-		if (e.languageId === "c" && e.uri.scheme === "file") {
+		if ((e.languageId === "c" ||  e.languageId === "cpp") && e.uri.scheme === "file") {
 			const cp = require('child_process');
 			let str: string = "";
 			str = e.uri.path;
