@@ -19,11 +19,15 @@ export function activate(context: vscode.ExtensionContext) {
 			});
 			cp.exec(bin + ' ' + str + " | tail -n +2", (err: string, stdout: string, stderr: string) => {
 				let parseLine = (line: string) => {
-					line = line.substr(30);
-					var ret = {line: 0, col: 0, desc: "No error"};
-					ret.line = +(line.split(",")[0]);
-					ret.col = +(line.split(":")[1].slice(0, -1));
-					ret.desc = line.split(":")[2].trim();
+					var ret = {line: 0, col: 0, desc: "No error", id: "NO_ERROR"};
+					let rgx: RegExp = /(\s*)(\w+)(\s*)(\()(line:\s*)([0-9]+)(,\s*)(col:\s*)([0-9]+)(\):)(\s*)(.+)/;
+					let match = rgx.exec(line);
+					if (match) {
+						ret.line = parseInt(match[6]);
+						ret.col = parseInt(match[9]);
+						ret.id = match[2];
+						ret.desc = match[12][0].toUpperCase() + match[12].slice(1);
+					}
 					return ret;
 				};
 				
@@ -36,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
 					var r1 = e.lineAt(obj.line - 1);
 					var r2 = e.lineAt(obj.line - 1);
 					var r = new vscode.Range(r1.range.start, r2.range.end);
-					diagnostics.push(new Diagnostic(r, obj.desc, DiagnosticSeverity.Warning));
+					diagnostics.push(new Diagnostic(r, obj.desc + " [" + obj.line + ":" + obj.col + ", " + obj.id + "]", DiagnosticSeverity.Warning));
 					diagnosticsCollection.set(e.uri, diagnostics);
 				}		
 			});
