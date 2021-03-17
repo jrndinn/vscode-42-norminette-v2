@@ -2,7 +2,7 @@
   "name": "42-norminette-v2",
   "displayName": "42 Norminette v2 (3.x)",
   "description": "The new 42 school norminette, compatible with norme v3.0",
-  "version": "0.5.1",
+  "version": "1.0.1",
   "publisher": "hroussea",
   "engines": {
     "vscode": "^1.52.0"
@@ -22,19 +22,28 @@
   "main": "./out/extension.js",
   "contributes": {
     "configuration": {
-      "title": "Norminette v2",
+      "title": "Norminette v3",
       "properties": {
         "norminettev2.norminette_bin": {
           "type": "string",
-          "default": "norminettev2",
+          "default": "norminette",
           "description": "command to invoke the norminette (3.x)"
+        },
+        "norminettev2.auto_launch": {
+          "type": "boolean",
+          "default": true,
+          "description": "automatically launch norminette when a file is saved"
         }
       }
     },
     "commands": [
       {
         "command": "42-norminette-v2.launchNorm",
-        "title": "Launch Norminette v2"
+        "title": "Launch Norminette v3"
+      },
+      {
+        "command": "42-norminette-v2.clear",
+        "title": "Clear Norminette Decorators"
       }
     ]
   },
